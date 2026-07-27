@@ -1,17 +1,24 @@
 import express from "express"
 import dotenv from "dotenv"
+import cors from "cors"
 import { connectDB } from "./lib/db.js"
 import cookieparser from "cookie-parser"
 import authRoutes from './routes/auth.routes.js'
+import messageRoutes from './routes/message.routes.js'
 
 const app=express()
 dotenv.config()
-app.use(express.json())
+app.use(express.json());
 app.use(cookieparser());
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true,
+}))
 
 const PORT=process.env.PORT;
 
-app.use("/api/auth",authRoutes)
+app.use("/api/auth",authRoutes);
+app.use("/api/message",messageRoutes)
 
 app.listen(PORT,(req,res)=>{
     console.log("Server is listening to Port :",PORT);
