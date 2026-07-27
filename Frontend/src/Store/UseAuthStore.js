@@ -1,19 +1,18 @@
 import {create} from "zustand"
 import { axiosInstance } from "../lib/axios.js"
-import { checkAuth } from "../../../Backend/src/controllers/auth.contoller"
-import axios from "axios"
+
 
 export const useAuthStore=create((set)=>({
     authUser:null,
     isSigningUp:false,
-    isLogginfUp:false,
+    isLogginIn:false,
     isUpdatingProfile:false,
 
     isCheckingAuth:true,  // intialy on loading
 
     checkAuth:async()=>{
         try {
-            const res=await axiosInstance.get("/api/check");
+            const res=await axiosInstance.get("/auth/check");
             set({authUser:res.data});
 
         } catch (error) {
