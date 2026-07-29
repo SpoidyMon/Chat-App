@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react'
 import Navbar from './Components/Navbar'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import { Loader } from "lucide-react"
 import ProfilePage from './Pages/ProfilePage'
 import HomePage from "./Pages/HomePage"
 import SignUpPage from "./Pages/SignUpPage"
 import LoginPage from "./Pages/LoginPage"
 import SettingsPage from "./Pages/SettingsPage"
+
+import { useEffect } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import { Loader } from "lucide-react"
 import { useAuthStore } from './Store/UseAuthStore'
+import {Toaster} from "react-hot-toast"
 
 const App = () => {
   const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
@@ -36,6 +38,7 @@ const App = () => {
         <Route path='/settings' element={authUser ? <SettingsPage /> : <Navigate to={"/login"} />} />
       </Routes>
 
+      <Toaster/>
     </div>
   )
 }
