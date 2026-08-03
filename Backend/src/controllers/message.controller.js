@@ -1,6 +1,5 @@
-import message from "../models/message.model.js";
-import User from "../models/User.model.js";
 import Messages from "../models/message.model.js";
+import User from "../models/User.model.js";
 import cloudinary from "../lib/cloudinary.js";
 
 
@@ -61,7 +60,7 @@ export const sendMessage=async(req,res)=>{
         await newMessage.save();
 
 
-        res.status(201).jsoon(newMessage);
+        res.status(201).json(newMessage);
 
     }catch(error){
         console.log(`Error in sendMessage contoller : ${error.message}`);
