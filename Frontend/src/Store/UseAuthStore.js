@@ -1,15 +1,14 @@
 import { create } from "zustand"
 import { axiosInstance } from "../lib/axios.js"
 import { toast } from "react-hot-toast"
-import {io} from "socket.io-client "
-import { get } from "mongoose"
+import io from "socket.io-client";
 
 const BASE_URL=import.meta.env.MODE === "development" ? "http://localhost:8080" : "/";
 
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set,get) => ({
     authUser: null,
     isSigningUp: false,
-    isLogginIn: false,
+    isLoggingIn: false,
     isUpdatingProfile: false,
     socket:null,
     isCheckingAuth: true,  // intialy on loading
@@ -49,7 +48,7 @@ export const useAuthStore = create((set) => ({
             await axiosInstance.post("/auth/logout");
             set({ authUser: null });
             toast.success("Logout Successfully");
-            get.disconnectSocket();
+            get().disconnectSocket();
         } catch (error) {
             const msg = error?.response?.data?.message || "Logout failed";
             toast.error(msg)
@@ -62,7 +61,7 @@ export const useAuthStore = create((set) => ({
             const res = await axiosInstance.post("/auth/login", data);
             set({ authUser: res.data })
             toast.success("LogedIn Successfully");
-            get.disconnectSocket();
+            get.connectSocket();
         } catch (error) {
             const msg = error?.response?.data?.message || error?.response?.data || "Login failed";
             toast.error(msg)

@@ -6,7 +6,7 @@ const server=http.createServer(app);
 
 const io=new Server(server,{
     Cors:{
-        origin:"http:localhost:5173",
+        origin:["http:localhost:5173"],
     },
 })
 
