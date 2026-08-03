@@ -5,8 +5,9 @@ import { connectDB } from "./lib/db.js"
 import cookieparser from "cookie-parser"
 import authRoutes from './routes/auth.routes.js'
 import messageRoutes from './routes/message.routes.js'
+import {app,server} from "./lib/Socket.js"
 
-const app=express()
+
 dotenv.config()
 
 //for extra size
@@ -23,7 +24,7 @@ const PORT=process.env.PORT;
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes)
 
-app.listen(PORT,(req,res)=>{
+server.listen(PORT,(req,res)=>{
     console.log("Server is listening to Port :",PORT);
     connectDB()
 })
