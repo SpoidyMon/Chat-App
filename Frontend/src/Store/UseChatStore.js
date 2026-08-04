@@ -15,7 +15,7 @@ export const useChatStore = create((set, get) => ({
         set({ isUsersLoading: true });
         try {
             const res = await axiosInstance.get("/messages/users");
-            set({ users: Array.isArray(res.data) ? res.data : res.data.filteredUser || [] });
+            set({ users: res.data || [] });
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to load users")
             set({ users: [] })
@@ -27,7 +27,7 @@ export const useChatStore = create((set, get) => ({
         set({ isMessagesLoading: true })
         try {
             const res = await axiosInstance.get(`/messages/${userId}`);
-            set({ messages: res.data.messages || [] })
+            set({ messages: res.data || [] })
         } catch (error) {
             toast.error(error.response?.data?.message || "Failed to load messages");
         } finally {

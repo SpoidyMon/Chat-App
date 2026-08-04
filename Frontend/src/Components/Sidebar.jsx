@@ -7,13 +7,15 @@ import { useAuthStore } from '../Store/UseAuthStore'
 
 const Sidebar = () => {
 
-    const { onlineUsers } = useAuthStore()
+    const { authUser, onlineUsers } = useAuthStore()
     const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore()
     const [showOnlineOnly, setShowOnlineOnly] = useState(false)
 
+    const otherUsers = users.filter((user) => user._id !== authUser?._id);
+
     const filteredUsers = showOnlineOnly
-        ? users.filter((user) => onlineUsers.includes(user._id))
-        : users;
+        ? otherUsers.filter((user) => onlineUsers.includes(user._id))
+        : otherUsers;
 
     useEffect(() => {
         getUsers()

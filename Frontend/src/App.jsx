@@ -13,15 +13,16 @@ import {Toaster} from "react-hot-toast"
 import { useThemeStore } from './Store/UseThemeStore.js'
 
 const App = () => {
-  const { authUser, isCheckingAuth, checkAuth } = useAuthStore();
+  const { authUser, isCheckingAuth, checkAuth ,onlineUsers} = useAuthStore();
   const {theme}=useThemeStore()
+  console.log(onlineUsers)
 
   useEffect(() => {
     checkAuth()
 
   }, [checkAuth])
 
-  console.log(authUser)
+  // console.log(authUser)
 
   if (isCheckingAuth && !authUser) {
     return (<div className="flex items-center justify-center h-screen">
