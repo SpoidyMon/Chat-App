@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import  { useEffect } from 'react'
 
 import { useChatStore } from '../Store/UseChatStore';
-import {formatMessageTime} from "../lib/utils.js"
+import { formatMessageTime } from "../lib/utils.js"
 import ChatHeader from './ChatHeader';
 import MessageInput from './MessageInput';
 import MessageSkeleton from "./Skeleton/MessageSkeleton"
@@ -10,13 +10,17 @@ import { useRef } from 'react';
 
 const ChatContainer = () => {
 
-  const { messages, getMessage, selectedUser, isMessagesLoading } = useChatStore()
-  const {authUser}=useAuthStore();
+  const { messages, getMessage, selectedUser, isMessagesLoading, subscribeToMessage, unsubscribeToMessage } = useChatStore()
+  const { authUser } = useAuthStore();
   const messageEndRef = useRef(null);
 
   useEffect(() => {
     getMessage(selectedUser._id)
-  }, [selectedUser._id, getMessage])
+
+    subscribeToMessage();
+
+    return () => unsubscribeToMessage();
+  }, [selectedUser._id, getMessage, subscribeToMessage, unsubscribeToMessage])
 
   useEffect(() => {
     if (messageEndRef.current && messages) {

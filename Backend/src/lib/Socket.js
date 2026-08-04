@@ -23,6 +23,9 @@ app.use(
 
 const userSocketMap={} //mapping the userId  and socketid  
 
+export function getRecieverSocketId(userId){
+    return userSocketMap[userId];
+}
 
 io.on("connection", (socket) => {
     console.log("A User Connected ", socket.id);

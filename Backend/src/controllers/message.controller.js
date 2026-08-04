@@ -1,6 +1,7 @@
 import Messages from "../models/message.model.js";
 import User from "../models/User.model.js";
 import cloudinary from "../lib/cloudinary.js";
+import {  getRecieverSocketId, io } from "../lib/Socket.js";
 
 
 export const getUsersForSidebar = async (req, res) => {
@@ -59,6 +60,10 @@ export const sendMessage=async(req,res)=>{
 
         await newMessage.save();
 
+        const recieverSocketId=getRecieverSocketId(recieverId);
+        if(recieverSocketId){
+            io.to(recieverSocketId).emit("newMessage",newMessage);
+        }
 
         res.status(201).json(newMessage);
 
