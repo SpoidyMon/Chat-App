@@ -6,7 +6,7 @@ import cookieparser from "cookie-parser"
 import authRoutes from './routes/auth.routes.js'
 import messageRoutes from './routes/message.routes.js'
 import {app,server} from "./lib/Socket.js"
-
+import path from "path"
 
 dotenv.config()
 
@@ -23,6 +23,16 @@ const PORT=process.env.PORT;
 
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes)
+
+const __dirname = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+
+    app.get("*splat", (req, res) => {
+        res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
+    });
+}
 
 server.listen(PORT,(req,res)=>{
     console.log("Server is listening to Port :",PORT);
