@@ -1,6 +1,7 @@
 import { useThemeStore } from "../Store/UseThemeStore";
-import { Send } from "lucide-react";
+import { Send, X } from "lucide-react";
 import { THEMES } from "../constants/index.js"
+import { Link } from "react-router-dom";
 
 
 const PREVIEW_MESSAGES = [
@@ -11,7 +12,20 @@ const PREVIEW_MESSAGES = [
 const SettingsPage = () => {
     const { theme, setTheme } = useThemeStore();
     return (
-        <div className="h-screen container mx-auto px-4 pt-20 max-w-5xl">
+        <div className="min-h-screen bg-discord-dark-main text-discord-text-normal py-12 relative overflow-y-auto">
+            {/* Escape/Back to Chat button */}
+            <div className="absolute top-6 right-6 md:top-10 md:right-10 flex flex-col items-center z-50">
+                <Link 
+                    to="/" 
+                    className="w-9 h-9 rounded-full border border-zinc-600 text-zinc-400 hover:bg-zinc-800 hover:text-white flex items-center justify-center transition-all cursor-pointer shadow-lg"
+                    title="Back to Chat"
+                >
+                    <X className="w-5 h-5" />
+                </Link>
+                <span className="text-[10px] font-bold text-zinc-500 mt-1 uppercase tracking-wider select-none">Esc</span>
+            </div>
+
+            <div className="max-w-4xl mx-auto px-4 py-8">
             <div className="space-y-6">
                 <div className="flex flex-col gap-1">
                     <h2 className="text-lg font-semibold">Theme</h2>
@@ -110,6 +124,7 @@ const SettingsPage = () => {
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     );
 

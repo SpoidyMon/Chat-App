@@ -1,34 +1,26 @@
 import { X } from "lucide-react";
-import { useAuthStore } from "../Store/UseAuthStore";
 import { useChatStore } from "../Store/UseChatStore";
 
 const ChatHeader = () => {
     const { selectedUser, setSelectedUser } = useChatStore();
-    const { onlineUsers } = useAuthStore();
 
     return (
-        <div className="p-2.5 border-b border-base-300">
-            <div className="flex items-center justify-between">
+        <div className="h-16 px-6 border-b border-base-200 flex items-center bg-base-100 flex-shrink-0 select-none">
+            <div className="flex items-center justify-between w-full">
+                {/* Title */}
                 <div className="flex items-center gap-3">
-                    {/* Avatar */}
-                    <div className="avatar">
-                        <div className="size-10 rounded-full relative">
-                            <img src={selectedUser.profilePic || "/avatar.png"} alt={selectedUser.username} />
-                        </div>
-                    </div>
-
-                    {/* User info */}
-                    <div>
-                        <h3 className="font-medium">{selectedUser.username}</h3>
-                        <p className="text-sm text-base-content/70">
-                            {onlineUsers.includes(selectedUser._id) ? "Online" : "Offline"}
-                        </p>
-                    </div>
+                    <span className="font-extrabold text-base-content text-md md:text-lg tracking-tight select-none">
+                        {selectedUser.username}
+                    </span>
                 </div>
 
-                {/* Close button */}
-                <button onClick={() => setSelectedUser(null)}>
-                    <X />
+                {/* Close Button */}
+                <button 
+                    onClick={() => setSelectedUser(null)}
+                    className="p-1.5 rounded-lg text-base-content/40 hover:text-base-content hover:bg-base-200 transition-all cursor-pointer"
+                    title="Close Chat"
+                >
+                    <X className="size-5" />
                 </button>
             </div>
         </div>
