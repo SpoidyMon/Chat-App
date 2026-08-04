@@ -1,6 +1,6 @@
 import { useChatStore } from '../Store/UseChatStore';
 import { useAuthStore } from '../Store/UseAuthStore';
-import { MessageSquare } from 'lucide-react';
+import { MessageSquare, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Sidebar from "../Components/Sidebar"
 import NoChatSelected from "../Components/NoChatSelected";
@@ -8,7 +8,7 @@ import ChatContainer from "../Components/ChatContainer";
 
 const HomePage = () => {
     const { selectedUser } = useChatStore();
-    const { authUser } = useAuthStore();
+    const { authUser, logout } = useAuthStore();
 
     return (
         <div className="h-screen w-screen flex bg-base-300/30 text-base-content overflow-hidden font-sans">
@@ -38,6 +38,15 @@ const HomePage = () => {
                 </div>
 
                 <div className="flex-1" />
+
+                {/* Logout Button */}
+                <button 
+                    onClick={logout} 
+                    className="p-2 rounded-xl text-base-content/40 hover:text-error hover:bg-error/10 transition-all cursor-pointer"
+                    title="Logout"
+                >
+                    <LogOut className="w-5.5 h-5.5" />
+                </button>
 
                 {/* Bottom User Avatar */}
                 <Link to="/profile" className="cursor-pointer hover:scale-105 transition-transform" title="My Profile">
