@@ -24,13 +24,16 @@ const PORT=process.env.PORT;
 app.use("/api/auth",authRoutes);
 app.use("/api/messages",messageRoutes)
 
-const __dirname = path.resolve();
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+    const distPath = path.join(__dirname, "../../Frontend/dist");
+    app.use(express.static(distPath));
 
     app.get("*splat", (req, res) => {
-        res.sendFile(path.join(__dirname, "../Frontend", "dist", "index.html"));
+        res.sendFile(path.join(distPath, "index.html"));
     });
 }
 
